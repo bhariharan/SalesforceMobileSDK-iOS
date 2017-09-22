@@ -303,7 +303,7 @@ static Class InstanceClass = nil;
         __weak typeof(self) weakSelf = self;
         // Default auth web view handler
         self.authViewHandler = [[SFAuthenticationViewHandler alloc]
-                                initWithDisplayBlock:^(SFAuthenticationManager *authManager, WKWebView *authWebView) {
+                                initWithDisplayBlock:^(SFAuthenticationManager *authManager, UIWebView *authWebView) {
                                     __strong typeof(weakSelf) strongSelf = weakSelf;
                                     if (strongSelf.authViewController == nil) {
                                         strongSelf.authViewController = [SFLoginViewController sharedInstance];
@@ -1217,7 +1217,7 @@ static Class InstanceClass = nil;
 
 #pragma mark - SFOAuthCoordinatorDelegate
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginAuthenticationWithView:(WKWebView *)view
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginAuthenticationWithView:(UIWebView *)view
 {
     [SFSDKCoreLogger d:[self class] format:@"oauthCoordinator:willBeginAuthenticationWithView:"];
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
@@ -1227,7 +1227,7 @@ static Class InstanceClass = nil;
     }];
 }
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didStartLoad:(WKWebView *)view
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didStartLoad:(UIWebView *)view
 {
     [SFSDKCoreLogger d:[self class] format:@"oauthCoordinator:didStartLoad:"];
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
@@ -1237,7 +1237,7 @@ static Class InstanceClass = nil;
     }];
 }
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didFinishLoad:(WKWebView *)view error:(NSError *)errorOrNil
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didFinishLoad:(UIWebView *)view error:(NSError *)errorOrNil
 {
     [SFSDKCoreLogger d:[self class] format:@"oauthCoordinator:didFinishLoad:error:"];
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
@@ -1247,7 +1247,7 @@ static Class InstanceClass = nil;
     }];
 }
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(WKWebView *)view
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view
 {
     [SFSDKCoreLogger d:[self class] format:@"oauthCoordinator:didBeginAuthenticationWithView"];
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {

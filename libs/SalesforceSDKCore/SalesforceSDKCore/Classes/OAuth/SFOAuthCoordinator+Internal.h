@@ -54,7 +54,7 @@ typedef NS_ENUM(NSUInteger, SFOAuthTokenEndpointFlow) {
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, assign) BOOL initialRequestLoaded;
 @property (nonatomic, copy) NSString *approvalCode;
-@property (nonatomic, strong) WKWebView *view;
+@property (nonatomic, strong) UIWebView *view;
 @property (nonatomic, strong) NSString *codeVerifier;
 @property (nonatomic, strong) SFOAuthInfo *authInfo;
 @property (nonatomic, readwrite) SFOAuthAdvancedAuthState advancedAuthState;

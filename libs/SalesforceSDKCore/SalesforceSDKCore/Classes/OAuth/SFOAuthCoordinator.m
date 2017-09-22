@@ -173,7 +173,7 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
     _credentials = nil;
     _responseData = nil;
     _scopes = nil;
-    [_view setNavigationDelegate:nil];
+    [_view setDelegate:nil];
     _view = nil;
 }
 
@@ -325,13 +325,10 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
 
 #pragma mark - Properties
 
-- (WKWebView *)view {
+- (UIWebView *)view {
     if (_view == nil) {
-        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-        config.processPool = SFSDKWebViewStateManager.sharedProcessPool;
-        _view = [[WKWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds] configuration:config];
-        _view.navigationDelegate = self;
-        _view.UIDelegate = self;
+        _view = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        _view.delegate = self;
     }
     return _view;
 }
@@ -882,35 +879,27 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
     return _session;
 }
 
-#pragma mark - WKNavigationDelegate (User-Agent Token Flow)
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    NSURL *url = navigationAction.request.URL;
+#pragma mark - UIWebViewDelegate (User-Agent Token Flow)
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSURL *url = request.URL;
     NSString *requestUrl = [url absoluteString];
     if ([self isRedirectURL:requestUrl]) {
         [self handleUserAgentResponse:url];
-        decisionHandler(WKNavigationActionPolicyCancel);
+        return NO;
     } else {
-        decisionHandler(WKNavigationActionPolicyAllow);
+        return YES;
     }
 }
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
-
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    NSURL *url = [webView URL];
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    NSURL *url = webView.request.URL;
     [SFSDKCoreLogger i:[self class] format:@"%@ host=%@ : path=%@", NSStringFromSelector(_cmd), url.host, url.path];
     if ([self.delegate respondsToSelector:@selector(oauthCoordinator:didStartLoad:)]) {
         [self.delegate oauthCoordinator:self didStartLoad:webView];
     }
 }
 
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    [self sfwebView:webView didFailLoadWithError:error];
-}
-
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
+- (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if ([self.delegate respondsToSelector:@selector(oauthCoordinator:didFinishLoad:error:)]) {
         [self.delegate oauthCoordinator:self didFinishLoad:webView error:nil];
@@ -922,7 +911,7 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
     }
 }
 
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+- (void) webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [self sfwebView:webView didFailLoadWithError:error];
 }
 
@@ -931,7 +920,7 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
     return (self.credentials.redirectUri && [[requestUrlString lowercaseString] hasPrefix:[self.credentials.redirectUri lowercaseString]]);
 }
 
-- (void)sfwebView:(WKWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)sfwebView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     
     // Report all errors other than -999 (operation couldn't be completed), which is not catastrophic.
@@ -946,7 +935,7 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
         [self.delegate oauthCoordinator:self didFinishLoad:webView error:error];
     }
     
-    NSURL *requestUrl = [webView URL];
+    NSURL *requestUrl = webView.request.URL;
     NSString *errorUrlString = [NSString stringWithFormat:@"%@://%@%@", [requestUrl scheme], [requestUrl host], [requestUrl relativePath]];
     [self.delegate oauthCoordinator:self didBeginAuthenticationWithView:self.view];
     if (-999 == error.code) {
@@ -955,23 +944,6 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
     } else {
         [SFSDKCoreLogger d:[self class] format:@"SFOAuthCoordinator:didFailLoadWithError: error code: %ld, description: %@, URL: %@", (long)error.code, [error localizedDescription], errorUrlString];
         [self notifyDelegateOfFailure:error authInfo:self.authInfo];
-    }
-}
-
-#pragma mark - WKUIDelegate
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
-    if ([self.delegate respondsToSelector:@selector(oauthCoordinator:displayAlertMessage:completion:)]) {
-        [self.delegate oauthCoordinator:self displayAlertMessage:message completion:completionHandler];
-    } else {
-        [SFSDKCoreLogger w:[self class] format:@"WKWebView did want to display an alert but no delegate responded to it"];
-    }
-}
-
-- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
-    if ([self.delegate respondsToSelector:@selector(oauthCoordinator:displayAlertMessage:completion:)]) {
-        [self.delegate oauthCoordinator:self displayConfirmationMessage:message completion:completionHandler];
-    } else {
-        [SFSDKCoreLogger w:[self class] format:@"WKWebView did want to display a confirmation alert but no delegate responded to it"];
     }
 }
 

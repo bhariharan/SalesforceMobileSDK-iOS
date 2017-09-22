@@ -118,7 +118,7 @@
     [self completeWithError:error];
 }
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(WKWebView *)view {
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view {
     // Shouldn't happen (refreshSessionWithCompletion:error: is guarded by the presence of a refresh token), but....
     [self finishForUnsupportedFlow:@"User Agent" coordinator:coordinator];
 }
