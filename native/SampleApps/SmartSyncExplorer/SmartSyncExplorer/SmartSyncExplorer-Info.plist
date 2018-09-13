@@ -2,6 +2,31 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Use FaceID</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.good.gd.discovery</string>
+				<string>com.good.gd.discovery.enterprise</string>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER).sc2.1.0.0</string>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER).sc2</string>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER).sc3</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>com.salesforce.samples.smartsyncexplorer</string>
+		</dict>
+	</array>
+	<key>GDApplicationVersion</key>
+	<string>1.0.0</string>
+	<key>GDApplicationID</key>
+	<string>com.salesforce.samples.smartsyncexplorer</string>
+	<key>GDLibraryMode</key>
+	<string>GDEnterpriseSimulation</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

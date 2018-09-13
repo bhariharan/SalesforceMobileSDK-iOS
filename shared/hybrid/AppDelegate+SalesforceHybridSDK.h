@@ -25,6 +25,13 @@
 #import "AppDelegate.h"
 #import <SalesforceHybridSDK/SFHybridViewController.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
-@interface AppDelegate (SalesforceHybridSDK) <SFUserAccountManagerDelegate>
+#import <GD/GD/GDiOS.h>
+
+@interface AppDelegate (SalesforceHybridSDK) <SFUserAccountManagerDelegate, GDiOSDelegate>
+
+-(void) onAuthorized:(GDAppEvent*)anEvent;
+-(void) onNotAuthorized:(GDAppEvent*)anEvent;
+
+@property (strong, nonatomic) GDiOS *good;
 
 @end

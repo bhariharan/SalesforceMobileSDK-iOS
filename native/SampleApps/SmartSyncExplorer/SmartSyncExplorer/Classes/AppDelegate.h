@@ -23,9 +23,16 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <GD/GD/GDiOS.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, GDiOSDelegate> {
+    BOOL started;
+}
 
+-(void) onAuthorized:(GDAppEvent*)anEvent;
+-(void) onNotAuthorized:(GDAppEvent*)anEvent;
+
+@property (strong, nonatomic) GDiOS *good;
 @property (strong, nonatomic) UIWindow *window;
 
 @end

@@ -85,6 +85,10 @@
 		BCC8F2271D46C01900171499 /* HostPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8F2261D46C01900171499 /* HostPage.swift */; };
 		CE2B8D671CE932D600C6FC6A /* SalesforceAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2B8D4C1CE932BD00C6FC6A /* SalesforceAnalytics.framework */; };
 		CE6AB39B1C10C4F50012125E /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE6AB39A1C10C4F50012125E /* libz.tbd */; };
+		CEF43F4121489733006F8107 /* GD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F2121489733006F8107 /* GD.framework */; };
+		CEF43F4321489740006F8107 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F4221489740006F8107 /* libc++.tbd */; };
+		CEF43F4521489753006F8107 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F4421489753006F8107 /* LocalAuthentication.framework */; };
+		CEF43F47214899DD006F8107 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F46214899DC006F8107 /* CoreTelephony.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -510,6 +514,10 @@
 		BCC8F2261D46C01900171499 /* HostPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostPage.swift; sourceTree = "<group>"; };
 		CE2B8D341CE932BD00C6FC6A /* SalesforceAnalytics.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceAnalytics.xcodeproj; path = ../../../libs/SalesforceAnalytics/SalesforceAnalytics.xcodeproj; sourceTree = "<group>"; };
 		CE6AB39A1C10C4F50012125E /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		CEF43F2121489733006F8107 /* GD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GD.framework; path = System/Library/Frameworks/GD.framework; sourceTree = SDKROOT; };
+		CEF43F4221489740006F8107 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		CEF43F4421489753006F8107 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		CEF43F46214899DC006F8107 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -524,6 +532,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF43F47214899DD006F8107 /* CoreTelephony.framework in Frameworks */,
+				CEF43F4521489753006F8107 /* LocalAuthentication.framework in Frameworks */,
+				CEF43F4321489740006F8107 /* libc++.tbd in Frameworks */,
+				CEF43F4121489733006F8107 /* GD.framework in Frameworks */,
 				CE2B8D671CE932D600C6FC6A /* SalesforceAnalytics.framework in Frameworks */,
 				CE6AB39B1C10C4F50012125E /* libz.tbd in Frameworks */,
 				82D0AC011C49A7A10081F833 /* CocoaLumberjack.framework in Frameworks */,
@@ -702,6 +714,10 @@
 		827C631319E6018C00027484 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEF43F46214899DC006F8107 /* CoreTelephony.framework */,
+				CEF43F4421489753006F8107 /* LocalAuthentication.framework */,
+				CEF43F4221489740006F8107 /* libc++.tbd */,
+				CEF43F2121489733006F8107 /* GD.framework */,
 				CE2B8D341CE932BD00C6FC6A /* SalesforceAnalytics.xcodeproj */,
 				829DA2561C1260960040F5F1 /* SmartSync.xcodeproj */,
 				82D0AB921C49A6FB0081F833 /* SmartStore.xcodeproj */,

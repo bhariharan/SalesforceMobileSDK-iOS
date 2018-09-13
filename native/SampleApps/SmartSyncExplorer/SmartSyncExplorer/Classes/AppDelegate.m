@@ -94,7 +94,6 @@
     return self;
 }
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // The Mobile SDK uses multiple UIWindow's inorder to present views. Having
@@ -102,12 +101,18 @@
     // lead to weird UIWindow behaviors. To avoid such rotation and other issues
     // between visible and hidden windows use the SFSDKUIWindow instead of  
     // UIWindow.
-    self.window = [[SFSDKUIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+
+    // Adding code for Blackberry Dynamics.
+    self.good = [GDiOS sharedInstance];
+    self.window = [[GDiOS sharedInstance] getWindow];
+    _good.delegate = self;
+    started = NO;
+    
+    // Shows the Blackberry authentication UI.
+    [_good authorize];
+
+    // self.window = [[SFSDKUIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self initializeAppViewState];
-    __weak typeof (self) weakSelf = self;
-    [SFSDKAuthHelper loginIfRequired:^{
-        [weakSelf setupRootViewController];
-    }];
     return YES;
 }
 
@@ -120,7 +125,33 @@
     // if ([SFUserAccountManager sharedInstance].currentUser.credentials.accessToken != nil) {
     //     [[SFPushNotificationManager sharedInstance] registerSalesforceNotificationsWithCompletionBlock:nil failBlock:nil];
     // }
+    
     //
+}
+
+// Blackberry Dynamics event callbacks.
+- (void)handleEvent:(GDAppEvent*)anEvent {
+    NSLog(@"handleEvent callback: %@", anEvent);
+    switch (anEvent.type) {
+        case GDAppEventAuthorized: {
+            __weak typeof (self) weakSelf = self;
+            [SFSDKAuthHelper loginIfRequired:^{
+                [weakSelf setupRootViewController];
+            }];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+}
+
+-(void) onAuthorized:(GDAppEvent*)anEvent {
+    NSLog(@"onAuthorized callback: %@", anEvent);
+}
+
+-(void) onNotAuthorized:(GDAppEvent*)anEvent {
+    NSLog(@"onNotAuthorized callback: %@", anEvent);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error

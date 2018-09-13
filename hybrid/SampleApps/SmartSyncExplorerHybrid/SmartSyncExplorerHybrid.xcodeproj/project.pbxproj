@@ -97,6 +97,10 @@
 		CED747441E8C86C60019AA9D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED747431E8C86C60019AA9D /* WebKit.framework */; };
 		CEEF97021EB7CF160059CA79 /* Cordova.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96DC1EB7CF050059CA79 /* Cordova.framework */; };
 		CEEF97031EB7CF1F0059CA79 /* Cordova.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CEEF96DC1EB7CF050059CA79 /* Cordova.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CEF43F6D2148A29A006F8107 /* GD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F482148A299006F8107 /* GD.framework */; };
+		CEF43F6F2148A2A1006F8107 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F6E2148A2A1006F8107 /* CoreTelephony.framework */; };
+		CEF43F712148A2A7006F8107 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F702148A2A7006F8107 /* LocalAuthentication.framework */; };
+		CEF43F732148A2AF006F8107 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF43F722148A2AF006F8107 /* libc++.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -638,6 +642,10 @@
 		CED7473B1E8C82F00019AA9D /* ios-wkwebview-exec.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "ios-wkwebview-exec.js"; path = "../../../external/cordova-plugin-wkwebview-engine/src/www/ios/ios-wkwebview-exec.js"; sourceTree = "<group>"; };
 		CED747431E8C86C60019AA9D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		CEEF96D41EB7CF050059CA79 /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../external/cordova-ios/cordova-ios/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		CEF43F482148A299006F8107 /* GD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GD.framework; path = System/Library/Frameworks/GD.framework; sourceTree = SDKROOT; };
+		CEF43F6E2148A2A1006F8107 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		CEF43F702148A2A7006F8107 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		CEF43F722148A2AF006F8107 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -645,6 +653,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF43F732148A2AF006F8107 /* libc++.tbd in Frameworks */,
+				CEF43F712148A2A7006F8107 /* LocalAuthentication.framework in Frameworks */,
+				CEF43F6F2148A2A1006F8107 /* CoreTelephony.framework in Frameworks */,
+				CEF43F6D2148A29A006F8107 /* GD.framework in Frameworks */,
 				CEEF97021EB7CF160059CA79 /* Cordova.framework in Frameworks */,
 				CED747441E8C86C60019AA9D /* WebKit.framework in Frameworks */,
 				CE2B8E0F1CE9334F00C6FC6A /* SalesforceAnalytics.framework in Frameworks */,
@@ -815,6 +827,10 @@
 		824A9BD01721FCA400C9BD79 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEF43F722148A2AF006F8107 /* libc++.tbd */,
+				CEF43F702148A2A7006F8107 /* LocalAuthentication.framework */,
+				CEF43F6E2148A2A1006F8107 /* CoreTelephony.framework */,
+				CEF43F482148A299006F8107 /* GD.framework */,
 				CED747431E8C86C60019AA9D /* WebKit.framework */,
 				CE2B8DD81CE9333A00C6FC6A /* SalesforceAnalytics.xcodeproj */,
 				8236AE361C4DB5C8004B69B8 /* Lumberjack.xcodeproj */,

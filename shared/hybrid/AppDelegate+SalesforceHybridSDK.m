@@ -36,7 +36,21 @@
 #import <SalesforceHybridSDK/SalesforceHybridSDKManager.h>
 #import <SalesforceHybridSDK/SFSDKHybridLogger.h>
 
+NSString * const kGoodKey = @"kGood";
+
 @implementation AppDelegate (SalesforceHybridSDK)
+
+@dynamic good;
+
+- (void)setGood:(GDiOS *)good
+{
+    objc_setAssociatedObject(self, &kGoodKey, good, OBJC_ASSOCIATION_ASSIGN);
+}
+
+- (GDiOS *)good
+{
+    return objc_getAssociatedObject(self, &kGoodKey);
+}
 
 // its dangerous to override a method from within a category.
 // Instead we will use method swizzling. we set this up in the load call.
@@ -80,6 +94,31 @@
 
 #pragma mark - App event lifecycle
 
+// Blackberry Dynamics event callbacks.
+- (void)handleEvent:(GDAppEvent*)anEvent {
+    NSLog(@"handleEvent callback: %@", anEvent);
+    switch (anEvent.type) {
+        case GDAppEventAuthorized: {
+            __weak typeof (self) weakSelf = self;
+            [SFSDKAuthHelper loginIfRequired:^{
+                [weakSelf setupRootViewController];
+            }];
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+}
+
+-(void) onAuthorized:(GDAppEvent*)anEvent {
+    NSLog(@"onAuthorized callback: %@", anEvent);
+}
+
+-(void) onNotAuthorized:(GDAppEvent*)anEvent {
+    NSLog(@"onNotAuthorized callback: %@", anEvent);
+}
+
 - (BOOL)sfsdk_swizzled_application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     int cacheSizeMemory = 8 * 1024 * 1024; // 8MB
@@ -87,14 +126,14 @@
     NSURLCache* sharedCache = [[SFLocalhostSubstitutionCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
     [NSURLCache setSharedURLCache:sharedCache];
     
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.autoresizesSubviews = YES;
+    // Adding code for Blackberry Dynamics.
+    self.good = [GDiOS sharedInstance];
+    self.window = [[GDiOS sharedInstance] getWindow];
+    self.good.delegate = self;
     
+    // Shows the Blackberry authentication UI.
+    [self.good authorize];
     [self initializeAppViewState];
-     __weak typeof (self) weakSelf = self;
-    [SFSDKAuthHelper loginIfRequired:^{
-        [weakSelf setupRootViewController];
-    }];
     return YES; // we don't want to run's Cordova didFinishLaunchingWithOptions - it creates another window with a webview
                 // if devs want to customize their AppDelegate.m, then they should get rid of AppDelegate+SalesforceHybrid.m
                 // and bring all of its code in their AppDelegate.m
